@@ -24,8 +24,7 @@ class LocationRequest extends Request
     public function rules()
     {
         return [
-          'name' => 'required|min:2',
-          'active' => 'required'
+          'name' => 'required|min:2'
         ];
     }
 }

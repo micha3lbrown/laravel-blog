@@ -28,8 +28,8 @@ class LocationController extends Controller
      * @return Response
      */
     public function create()
-    {   
-        return view('locations.create', compact('location'));
+    {
+        return view('locations.create');
     }
 
     /**
@@ -40,7 +40,16 @@ class LocationController extends Controller
      */
     public function store(LocationRequest $request)
     {
-        Location::create($request);
+
+        // store data
+        $location = new Location;
+
+        $location->name = $request->name;
+        $location->active = $request->active;
+
+
+        $location->save();
+        //return Redirect::to('location');
 
     }
 
