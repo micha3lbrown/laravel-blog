@@ -14,8 +14,10 @@ class CreateLocationsTagsTable extends Migration
     {
         Schema::create('locations_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('locations_id');
-            $table->integer('tags_id');
+            $table->integer('location_id')->unsigned();
+            $table->foreign('location_id')->references('id')->on('locations');
+            $table->integer('tag_id')->unsigned();
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
@@ -25,7 +27,7 @@ class CreateLocationsTagsTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
         Schema::drop('locations_tags');
     }
 }
