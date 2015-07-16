@@ -10,7 +10,9 @@
 		<div class="col-sm-6">
 			<ul>
 				@foreach ($locations as $location)
-				    <li>{{$location->name}}</li>
+				    <li>
+				    	<p class="lead">{{$location->name}}</p>
+			    	</li>
 				@endforeach		
 			</ul>
 		</div>
