@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Location;
+use Requests\LocationRequest;
+
 
 class LocationController extends Controller
 {
@@ -27,8 +28,8 @@ class LocationController extends Controller
      * @return Response
      */
     public function create()
-    {
-        //
+    {   
+        return view('locations.create', compact('location'));
     }
 
     /**
@@ -37,9 +38,10 @@ class LocationController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(LocationRequest $request)
     {
-        //
+        Location::create($request);
+
     }
 
     /**
@@ -50,7 +52,8 @@ class LocationController extends Controller
      */
     public function show($id)
     {
-        //
+        $location = Location::findOrFail($id);
+        return view('locations.show', compact('location'));
     }
 
     /**
