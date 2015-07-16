@@ -41,15 +41,9 @@ class LocationController extends Controller
     public function store(LocationRequest $request)
     {
 
-        // store data
-        $location = new Location;
-
-        $location->name = $request->name;
-        $location->active = $request->active;
-
-
-        $location->save();
-        //return Redirect::to('location');
+        Location::create($request->all());
+        
+        return redirect()->action('LocationController@index');
 
     }
 
@@ -73,7 +67,8 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $location = Location::findOrFail($id);
+        return view('locations.edit', compact('location'));
     }
 
     /**
@@ -83,9 +78,12 @@ class LocationController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(LocationRequest $request, $id)
     {
-        //
+        $location = Location::findOrFail($id);
+        $location->update($request->all());
+
+        return redirect()->action('LocationController@index');
     }
 
     /**

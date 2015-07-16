@@ -11,7 +11,9 @@
 			<ul>
 				@foreach ($locations as $location)
 				    <li>
-				    	<p class="lead">{{$location->name}}</p>
+				    	<p class="lead">
+				    		<a href="location/{{$location->id}}">{{$location->name}}</a>	
+			    		</p>
 			    	</li>
 				@endforeach		
 			</ul>

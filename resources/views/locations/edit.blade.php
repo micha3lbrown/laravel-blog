@@ -9,8 +9,8 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
-			{!! Form::open(array('action' => 'LocationController@store')) !!}
-		    	@include('forms.locations-form', ['submit' => 'Add Location'])
+			{!! Form::model($location, ['method'=> 'PATCH', 'action' => ['LocationController@update', $location->id]]) !!}
+		    	@include('forms.locations-form', ['submit' => 'Edit Location'])
 			{!! Form::close() !!}	
 		</div>
 	</div>
