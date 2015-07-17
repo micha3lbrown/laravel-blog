@@ -43,9 +43,7 @@ class LocationsController extends Controller
     {
         $location = Location::create($request->all());
 
-        $tags = $request->input('tags');
-
-        $location->tags()->attach($tags);
+        $location->tags()->attach($request->input('tag_list'));
 
         return redirect()->action('LocationsController@index');
 
@@ -86,13 +84,12 @@ class LocationsController extends Controller
      */
     public function update(LocationRequest $request, $id)
     {
+        
         $location = Location::findOrFail($id);
         
         $location->update($request->all());
 
-        $tags = $request->input('tags');
-
-        $location->tags()->attach($tags);
+        $location->tags()->attach($request->input('tag_list'));
 
         return redirect()->action('LocationsController@index');
     }

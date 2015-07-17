@@ -5,6 +5,7 @@
 		<div class="col-sm-12">
 			<h1>Locations</h1>
 			<hr>
+			@include('errors.form-errors')
 		</div>
 	</div>
 	<div class="row">

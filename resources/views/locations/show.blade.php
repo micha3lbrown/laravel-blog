@@ -11,13 +11,14 @@
 		</h1>
 		<p class="lead">{{$location->active}}</p>
 		
-			<ul>Tags:
+		@unless ($location->tags->isEmpty())
+			<h5>Tags:</h5>
+			<ul>
 				@foreach($location->tags as $tag) 
 					<li>{{$tag->name}}</li>
 				@endforeach
 			</ul>
-		
-
+		@endunless
 	</div>
 	<div class="col-sm-2">
 		@include('forms.locations-delete')

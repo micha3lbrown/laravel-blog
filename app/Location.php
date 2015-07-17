@@ -25,4 +25,13 @@ class Location extends Model
 	{
 		return $this->belongsToMany('App\Tag');
 	}
+
+	/**
+	 * Get ids of associated tags 
+	 * @return [Array] Tag Ids
+	 */
+	public function getTagListAttribute() 
+	{
+		return $this->tags->lists('id');
+	}
 }
