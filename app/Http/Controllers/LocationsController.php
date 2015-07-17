@@ -42,7 +42,6 @@ class LocationsController extends Controller
     public function store(LocationRequest $request)
     {
         $location = Location::create($request->all());
-
         $location->tags()->attach($request->input('tag_list'));
 
         return redirect()->action('LocationsController@index');
@@ -84,11 +83,8 @@ class LocationsController extends Controller
      */
     public function update(LocationRequest $request, $id)
     {
-        
         $location = Location::findOrFail($id);
-        
         $location->update($request->all());
-
         $location->tags()->attach($request->input('tag_list'));
 
         return redirect()->action('LocationsController@index');

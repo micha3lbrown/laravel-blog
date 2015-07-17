@@ -8,7 +8,8 @@
 </div>
 <div class="form-group">
 	{!! Form::label('active') !!}
-	{!! Form::checkbox('active', 0,['class' => 'form-control']) !!}
+    {!! Form::hidden('active',  0) !!}
+	{!! Form::checkbox('active',  1, null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::submit($submit, ['class' => 'btn btn-success']) !!}
