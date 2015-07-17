@@ -29,7 +29,8 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        return view('locations.create');
+        $tags = \App\Tag::lists('name', 'id');
+        return view('locations.create', compact('tags'));
     }
 
     /**
@@ -40,8 +41,12 @@ class LocationsController extends Controller
      */
     public function store(LocationRequest $request)
     {
+        $location = Location::create($request->all());
 
-        Location::create($request->all());
+        $tags = $request->input('tags');
+
+        $location->tags()->attach($tags);
+
         return redirect()->action('LocationsController@index');
 
     }
@@ -55,7 +60,8 @@ class LocationsController extends Controller
     public function show($id)
     {
         $location = Location::findOrFail($id);
-        return view('locations.show', compact('location'));
+        $tags = $location->tags()->lists('name');
+        return view('locations.show', compact('location', 'tags'));
     }
 
     /**
@@ -67,7 +73,8 @@ class LocationsController extends Controller
     public function edit($id)
     {
         $location = Location::findOrFail($id);
-        return view('locations.edit', compact('location'));
+        $tags = \App\Tag::lists('name', 'id');
+        return view('locations.edit', compact('location', 'tags'));
     }
 
     /**
@@ -80,7 +87,12 @@ class LocationsController extends Controller
     public function update(LocationRequest $request, $id)
     {
         $location = Location::findOrFail($id);
+        
         $location->update($request->all());
+
+        $tags = $request->input('tags');
+
+        $location->tags()->attach($tags);
 
         return redirect()->action('LocationsController@index');
     }
