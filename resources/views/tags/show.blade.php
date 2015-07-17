@@ -4,15 +4,15 @@
 
 <div class="row">
 	<div class="col-sm-10">
-		<h1>{{$location->name}} &nbsp 
+		<h1>{{$tag->name}} &nbsp 
 			<small> 
-				<a href="/locations/{{$location->id}}/edit">edit</a>
+				<a href="/tags/{{$tag->id}}/edit">edit</a>
 			</small>
 		</h1>
-		<p class="lead">{{$location->active}}</p>
+		<p class="lead">{{$tag->active}}</p>
 	</div>
 	<div class="col-sm-2">
-		@include('forms.locations-delete')
+		@include('forms.tags-delete')
 	</div>
 </div>
 

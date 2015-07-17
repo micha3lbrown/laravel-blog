@@ -9,7 +9,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
-			{!! Form::open(array('action' => 'LocationController@store')) !!}
+			{!! Form::open(array('action' => 'LocationsController@store')) !!}
 		    	@include('forms.locations-form', ['submit' => 'Add Location'])
 			{!! Form::close() !!}	
 		</div>

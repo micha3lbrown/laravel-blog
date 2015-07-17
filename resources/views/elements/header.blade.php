@@ -16,16 +16,21 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Link</a></li>
-						<li><a href="#">Link</a></li>
+					
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Link</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tags <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/tags/">All</a></li>
+								<li><a href="/tags/create">Create</a></li>
+							</ul>
+						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/location/">All</a></li>
-								<li><a href="/location/create">Create</a></li>
+								<li><a href="/locations/">All</a></li>
+								<li><a href="/locations/create">Create</a></li>
 							</ul>
 						</li>
 					</ul>

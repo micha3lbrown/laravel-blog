@@ -15,4 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('location', 'LocationController');
+Route::resource('locations', 'LocationsController');
+Route::resource('tags', 'TagsController');

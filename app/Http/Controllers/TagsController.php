@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Location;
-use App\Http\Requests\LocationRequest;
+use App\Tag;
 
-class LocationController extends Controller
+class TagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $locations = Location::all();
-        return view('locations.index', compact('locations'));
+        $tags = Tag::all();
+        return view('tags.index', compact('tags'));
     }
 
     /**
@@ -29,7 +28,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('locations.create');
+        return view('tags.create');
     }
 
     /**
@@ -38,13 +37,10 @@ class LocationController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(LocationRequest $request)
+    public function store(Request $request)
     {
-
-        Location::create($request->all());
-        
-        return redirect()->action('LocationController@index');
-
+        Tag::create($request->all());
+        return redirect()->action('TagsController@index');
     }
 
     /**
@@ -55,8 +51,8 @@ class LocationController extends Controller
      */
     public function show($id)
     {
-        $location = Location::findOrFail($id);
-        return view('locations.show', compact('location'));
+       $tag = Tag::findOrFail($id);
+       return view('tags.show', compact('tag'));
     }
 
     /**
@@ -67,8 +63,8 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
-        $location = Location::findOrFail($id);
-        return view('locations.edit', compact('location'));
+        $tag = Tag::findOrFail($id);
+        return view('tags.edit', compact('tag'));
     }
 
     /**
@@ -78,12 +74,11 @@ class LocationController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(LocationRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $location = Location::findOrFail($id);
-        $location->update($request->all());
-
-        return redirect()->action('LocationController@index');
+        $tag = Tag::findOrFail($id);
+        $tag->update($request->all());
+        return redirect()->action('TagsController@index');
     }
 
     /**
@@ -94,6 +89,8 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
+        return redirect()->action('TagsController@index');
     }
 }

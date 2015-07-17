@@ -4,12 +4,6 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<ul class="nav navbar-nav pull-right">
-						<li class="active">
-							<a href="#">Home</a>
-						</li>
-						<li>
-							<a href="#">Link</a>
-						</li>
 					</ul>		
 				</div>
 			</div>
