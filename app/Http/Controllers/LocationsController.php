@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Location;
+use App\Tag;
 use App\Http\Requests\LocationRequest;
 
 class LocationsController extends Controller
@@ -22,6 +22,25 @@ class LocationsController extends Controller
         return view('locations.index', compact('locations'));
     }
 
+
+    /**
+     * Search for food
+     *
+     * @return Response
+     */
+    public function home()
+    {
+        // Get an array of Location IDs
+        $listLocations = Location::lists('id')->toArray();
+        // Picks a random entry out of an array
+        $randArrayID = array_rand($listLocations);
+        // Get Location by ID
+        $location = Location::find($listLocations[$randArrayID]);
+
+        return view('locations.home', compact('location'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,14 +48,14 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        $tags = \App\Tag::lists('name', 'id');
+        $tags = Tag::lists('name', 'id');
         return view('locations.create', compact('tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  LocationRequest  $request
      * @return Response
      */
     public function store(LocationRequest $request)
@@ -50,7 +69,7 @@ class LocationsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function show(Location $location)
@@ -61,20 +80,20 @@ class LocationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function edit(Location $location)
     {
-        $tags = \App\Tag::lists('name', 'id');
+        $tags = Tag::lists('name', 'id');
         return view('locations.edit', compact('location', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param  Location $location
+     * @param  LocationRequest  $request
      * @return Response
      */
     public function update(Location $location, LocationRequest $request)
@@ -88,22 +107,21 @@ class LocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function destroy(Location $location)
     {
-        
         $location->delete();
         return redirect()->action('LocationsController@index');
     }
 
     /**
      * Sync relations inside of locations_tags table
-     * 
+     *
      * @param  Location $location [Location Model]
      * @param  array    $tags     [array of tag id's]
-     * @return true   
+     * @return true
      */
     private function syncTags(Location $location, array $tags)
     {
@@ -114,7 +132,7 @@ class LocationsController extends Controller
     /**
      * Save a new Article
      * @param  LocationRequest $request [Validation]
-     * @return [$location]                  
+     * @return [$location]
      */
     private function createLocation(LocationRequest $request)
     {

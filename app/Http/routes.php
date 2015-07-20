@@ -16,6 +16,8 @@
 // });
 
 Route::resource('locations', 'LocationsController');
+Route::get('home', 'LocationsController@home');
+
 Route::resource('tags', 'TagsController');
 
 Route::controller('auth', 'Auth\AuthController');
