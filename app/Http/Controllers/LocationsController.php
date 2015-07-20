@@ -41,12 +41,8 @@ class LocationsController extends Controller
      */
     public function store(LocationRequest $request)
     {
-        $location = Location::create($request->all());
-
-        $location->tags()->attach($request->input('tag_list'));
-
+        $this->createLocation($request);
         return redirect()->action('LocationsController@index');
-
     }
 
     /**
@@ -55,11 +51,9 @@ class LocationsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Location $location)
     {
-        $location = Location::findOrFail($id);
-        $tags = $location->tags()->lists('name');
-        return view('locations.show', compact('location', 'tags'));
+        return view('locations.show', compact('location'));
     }
 
     /**
@@ -68,9 +62,8 @@ class LocationsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Location $location)
     {
-        $location = Location::findOrFail($id);
         $tags = \App\Tag::lists('name', 'id');
         return view('locations.edit', compact('location', 'tags'));
     }
@@ -82,15 +75,11 @@ class LocationsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(LocationRequest $request, $id)
+    public function update(Location $location, LocationRequest $request)
     {
-        
-        $location = Location::findOrFail($id);
-        
+        dd($request);
         $location->update($request->all());
-
-        $location->tags()->attach($request->input('tag_list'));
-
+        $this->syncTags($location, $request->input('tag_list'));
         return redirect()->action('LocationsController@index');
     }
 
@@ -100,10 +89,34 @@ class LocationsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Location $location)
     {
-        $location = Location::findOrFail($id);
+        
         $location->delete();
         return redirect()->action('LocationsController@index');
+    }
+
+    /**
+     * Sync relations inside of locations_tags table
+     * 
+     * @param  Location $location [Location Model]
+     * @param  array    $tags     [array of tag id's]
+     * @return true   
+     */
+    private function syncTags(Location $location, array $tags)
+    {
+        $location->tags()->sync($tags);
+    }
+
+    /**
+     * Save a new Article
+     * @param  LocationRequest $request [Validation]
+     * @return [$location]                  
+     */
+    private function createLocation(LocationRequest $request)
+    {
+        $location = Location::create($request->all());
+        $this->syncTags($location, $request->input('tag_list'));
+        return $location;
     }
 }

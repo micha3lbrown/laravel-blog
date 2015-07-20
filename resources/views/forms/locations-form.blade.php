@@ -4,7 +4,7 @@
 </div>
 <div class="form-group">
 	{!! Form::label('tag_list', 'Tags:') !!}
-	{!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control',  'multiple']) !!}
+	{!! Form::select('tag_list[]', $tags, null, ['id' => 'tag-list', 'class' => 'form-control',  'multiple']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('active') !!}
@@ -13,3 +13,11 @@
 <div class="form-group">
 	{!! Form::submit($submit, ['class' => 'btn btn-success']) !!}
 </div>
+
+@section('footer')
+	<script>
+		$('#tag-list').select2({
+			tags: true
+		});
+	</script>
+@endsection
