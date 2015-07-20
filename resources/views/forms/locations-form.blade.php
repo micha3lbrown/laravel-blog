@@ -2,9 +2,11 @@
 	{!! Form::label('name') !!}
 	{!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
+{{-- {{dd($location->tag_list)}} --}}
 <div class="form-group">
 	{!! Form::label('tag_list', 'Tags:') !!}
 	{!! Form::select('tag_list[]', $tags, null, ['id' => 'tag-list', 'class' => 'form-control',  'multiple']) !!}
+	{{-- name , list, --}}
 </div>
 <div class="form-group">
 	{!! Form::label('active') !!}

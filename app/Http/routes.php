@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::resource('locations', 'LocationsController');
 Route::resource('tags', 'TagsController');
+
+Route::controller('auth', 'Auth\AuthController');
+Route::controller('password', 'Auth\PasswordController');

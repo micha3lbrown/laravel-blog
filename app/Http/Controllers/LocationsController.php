@@ -41,6 +41,7 @@ class LocationsController extends Controller
      */
     public function store(LocationRequest $request)
     {
+;
         $location = Location::create($request->all());
         $location->tags()->attach($request->input('tag_list'));
         return redirect()->action('LocationsController@index');
@@ -78,9 +79,9 @@ class LocationsController extends Controller
      */
     public function update(Location $location, LocationRequest $request)
     {
-
+        // dd($request->all());
         $location->update($request->all());
-        $this->syncTags($location, $request->input('tag_list'));
+        $this->syncTags($location, (array) $request->input('tag_list'));
         return redirect()->action('LocationsController@index');
     }
 
@@ -106,6 +107,7 @@ class LocationsController extends Controller
      */
     private function syncTags(Location $location, array $tags)
     {
+        // dd($tags);
         $location->tags()->sync($tags);
     }
 

@@ -22,7 +22,7 @@ class Location extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
 	public function tags()
-	{
+	{	
 		return $this->belongsToMany('App\Tag');
 	}
 
@@ -32,6 +32,6 @@ class Location extends Model
 	 */
 	public function getTagListAttribute() 
 	{
-		return $this->tags->lists('id');
+		return $this->tags->lists('id')->toArray();
 	}
 }
