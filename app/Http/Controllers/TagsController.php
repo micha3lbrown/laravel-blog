@@ -10,6 +10,12 @@ use App\Tag;
 
 class TagsController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'view']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +24,7 @@ class TagsController extends Controller
     public function index()
     {
         $tags = Tag::all();
+
         return view('tags.index', compact('tags'));
     }
 
@@ -27,7 +34,7 @@ class TagsController extends Controller
      * @return Response
      */
     public function create()
-    {
+    {        
         return view('tags.create');
     }
 
@@ -39,7 +46,8 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-        Tag::create($request->all());
+        $this->createTag($request);
+
         return redirect()->action('TagsController@index');
     }
 
@@ -49,9 +57,8 @@ class TagsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-       $tag = Tag::findOrFail($id);
        return view('tags.show', compact('tag'));
     }
 
@@ -61,9 +68,8 @@ class TagsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        $tag = Tag::findOrFail($id);
         return view('tags.edit', compact('tag'));
     }
 
@@ -74,10 +80,10 @@ class TagsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Tag $tag, Request $request)
     {
-        $tag = Tag::findOrFail($id);
         $tag->update($request->all());
+    
         return redirect()->action('TagsController@index');
     }
 
@@ -87,10 +93,17 @@ class TagsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        $tag = Tag::findOrFail($id);
         $tag->delete();
+
         return redirect()->action('TagsController@index');
+    }
+
+    private function createTag(Request $request)
+    {
+        $tag = Tag::create($request->all());
+
+        return $tag;
     }
 }

@@ -27,7 +27,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::all();
+        $locations = Location::all()->sortBy('name');
 
         return view('locations.index', compact('locations'));
     }
@@ -117,7 +117,17 @@ class LocationsController extends Controller
      */
     private function syncTags(Location $location, array $tags)
     {
-        $location->tags()->sync($tags);
+        $currentTags = array_filter($tags, 'is_numeric');       // ["1", "3", "5"]
+        $newTags = array_diff($tags, $currentTags);
+
+        foreach ($newTags as $newTag)
+        {
+            if ($tag = Tag::create(['name' => $newTag])) {
+                $currentTags[] = $tag->id;
+            }
+        }
+
+        $location->tags()->sync($currentTags);
     }
 
     /**
