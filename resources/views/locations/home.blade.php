@@ -21,10 +21,21 @@
 
     <div class="row">
         <div class="col-sm-12">
+            <h2>All Tags</h2>
+        </div>
+    </div>
+    <hr>
+    <ul>
+        @foreach ($tags as $key => $value)
+            <li>{{$key }}{{ $value }}</li>
+        @endforeach
+    </ul>
+
+    <div class="row">
+        <div class="col-sm-12">
             <h3>{{$location->name}}</h3>
         </div>
     </div>
-
     <ul>
         @foreach ($location->tags as $tag)
             <li>{{ $tag->name }}</li>

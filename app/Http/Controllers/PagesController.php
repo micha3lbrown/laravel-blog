@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+use App\Location;
+use App\Tag;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -11,12 +14,11 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $tags = \App\Tag::all();
-        // Get an array of Location IDs
-        $locations = \App\Location::all();
-        //General Random Location
-        $location = $locations->random();
+        // Get random location
+        $location = Location::all()->random();
+        // Get all tags
+        $tags = Tag::lists('name', 'id');
 
-        return view('locations.home', compact('location'));
+        return view('locations.home', compact('location', 'tags'));
     }
 }
