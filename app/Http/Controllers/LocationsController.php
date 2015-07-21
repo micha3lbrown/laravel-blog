@@ -32,30 +32,6 @@ class LocationsController extends Controller
         return view('locations.index', compact('locations'));
     }
 
-
-    /**
-     * Search for food
-     *
-     * @return Response
-     */
-    public function home()
-    {
-        var_dump($_POST);
-//        if (!$request) {
-
-            // Get an array of Location IDs
-            $listLocations = Location::lists('id')->toArray();
-            // Picks a random entry out of an array
-            $randArrayID = array_rand($listLocations);
-            // Get Location by ID
-            $location = Location::find($listLocations[$randArrayID]);
-//        }
-//        $location = array();
-
-        return view('locations.home', compact('location'));
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *

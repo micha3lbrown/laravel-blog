@@ -16,7 +16,7 @@
 // });
 
 Route::resource('locations', 'LocationsController');
-Route::any('home', 'LocationsController@home');
+Route::any('home', 'PagesController@home');
 
 Route::resource('tags', 'TagsController');
 
