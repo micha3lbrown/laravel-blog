@@ -14,11 +14,17 @@ class PagesController extends Controller
 {
     public function home()
     {
-        // Get random location
-        $location = Location::all()->random();
-        // Get all tags
-        $tags = Tag::lists('name', 'id');
+    	//Get Tags
+        $tags = Tag::all();
+ 		//Get Locations
+ 		$locations = Location::where('active', 1)->get();
+        $randomLocation = $locations->random();
 
-        return view('locations.home', compact('location', 'tags'));
+        return view('locations.home', compact('locations', 'tags', 'randomLocation'));
+    }
+
+    public function filter(Request $request)
+    {
+    	dd($request);
     }
 }

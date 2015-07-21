@@ -2,43 +2,61 @@
 @extends('layouts.default')
 
 @section('content')
-
-
     <div class="row">
-        <div class="col-sm-12 text-center">
-            <h1>Fine Me Food</h1>
-            <form method="POST" action="./home" >
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="random_location" value="1">
-                <div class="form-group" style="padding-top: 50px; padding-bottom: 10px">
-                    <button class="btn btn-success" type="submit">Now!</button>
-                </div>
-            </form>
+        <div class="col-sm-6 text-center">
+            <h1 class="padv50">Fine Me Food</h1>
+            <a href="/home" class="btn btn-lg btn-success mv50">Now!</a>
+        </div>
+        <div class="col-sm-6">
+            <h1>Completely Random</h1>
             <hr>
-            @include('errors.form-errors')
+            @include('elements.selectedLocation', ['location' => $randomLocation])
         </div>
     </div>
-
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
+            {!! Form::open(array('action' => 'PagesController@home')) !!}
+                <div class="form-group">
+                    {!! Form::label('tags', 'Tags:') !!}
+                    {!! Form::select('tags_list[]', $tags->lists('name','id'), null,  ['id' => 'tag-input', 'class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::submit('Find', ['class' => 'btn btn-success']) !!}
+                </div>
+            {!! Form::close() !!}   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             <h2>All Tags</h2>
+            <hr>
+            @unless ($tags->isEmpty())
+                @include('elements.tagList', ['tags' => $tags])
+            @endunless
+        </div>
+        <div class="col-sm-6">
+            <h2>Selected Tags</h2>
+            <hr>
+            @unless ($tags->isEmpty())
+                @include('elements.tagList', ['tags' => $tags])
+            @endunless
         </div>
     </div>
-    <hr>
-    <ul>
-        @foreach ($tags as $key => $value)
-            <li>{{$key }}{{ $value }}</li>
-        @endforeach
-    </ul>
-
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{$location->name}}</h3>
+            <h2>Locations:</h2>
+            <hr>
+            @unless ($locations->isEmpty())
+                @include('elements.tagList', ['tags' => $locations])
+            @endunless
         </div>
     </div>
-    <ul>
-        @foreach ($location->tags as $tag)
-            <li>{{ $tag->name }}</li>
-        @endforeach
-    </ul>
 @stop
+
+@section('footer')
+    <script>
+        $('#tag-input').select2({
+            tags: true
+        });
+    </script>
+@endsection
