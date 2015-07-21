@@ -13,13 +13,10 @@ class PagesController extends Controller
     {
         $tags = \App\Tag::all();
         // Get an array of Location IDs
-        $listLocations = \App\Location::lists('id')->toArray();
-        // Picks a random entry out of an array
-        $randArrayID = array_rand($listLocations);
-        // Get Location by ID
-        $location = \App\Location::find($listLocations[$randArrayID]);
+        $locations = \App\Location::all();
+        //General Random Location
+        $location = $locations->random();
 
         return view('locations.home', compact('location'));
-    
     }
 }
