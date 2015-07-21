@@ -13,9 +13,13 @@
 		
 		@unless ($location->tags->isEmpty())
 			<h5>Tags:</h5>
-			<ul>
+			<ul class="nav nav-pills">
 				@foreach($location->tags as $tag) 
-					<li>{{$tag->name}}</li>
+					<li>
+						<a href="/tags/{{$tag->id}}">
+							{{$tag->name}}
+						</a>
+					</li>
 				@endforeach
 			</ul>
 		@endunless
