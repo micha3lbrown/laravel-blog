@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
 use App\Http\Controllers\Controller;
 use App\Location;
 use App\Http\Requests\LocationRequest;
 
 class LocationsController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('owner', ['only' => [ 'edit', 'update']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -41,9 +48,12 @@ class LocationsController extends Controller
      */
     public function store(LocationRequest $request)
     {
-;
-        $location = Location::create($request->all());
+        $location = new Location($request->all());
+        
+        Auth::user()->locations()->save($location);
+        
         $location->tags()->attach($request->input('tag_list'));
+        
         return redirect()->action('LocationsController@index');
     }
 
@@ -79,7 +89,6 @@ class LocationsController extends Controller
      */
     public function update(Location $location, LocationRequest $request)
     {
-        // dd($request->all());
         $location->update($request->all());
         $this->syncTags($location, (array) $request->input('tag_list'));
         return redirect()->action('LocationsController@index');
@@ -107,7 +116,6 @@ class LocationsController extends Controller
      */
     private function syncTags(Location $location, array $tags)
     {
-        // dd($tags);
         $location->tags()->sync($tags);
     }
 
