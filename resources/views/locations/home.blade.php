@@ -2,8 +2,6 @@
 @extends('layouts.default')
 
 @section('content')
-
-
     <div class="row">
         <div class="col-sm-12 text-center">
             <h1>Fine Me Food</h1>
@@ -24,12 +22,13 @@
             <h2>All Tags</h2>
         </div>
     </div>
-    <hr>
     <ul>
         @foreach ($tags as $key => $value)
             <li>{{$key }}{{ $value }}</li>
         @endforeach
     </ul>
+
+    <hr>
 
     <div class="row">
         <div class="col-sm-12">
