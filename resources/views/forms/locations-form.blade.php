@@ -1,10 +1,10 @@
 <div class="form-group">
-	{!! Form::label('name') !!}
-	{!! Form::text('name', null, ['class' => 'form-control']) !!}
+	{!! Form::label('name', 'Name') !!}
+	{!! Form::text('name', null, ['name' => 'name', 'class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('distance') !!}
-	{!! Form::text('distance', null, ['class' => 'form-control']) !!}
+	{!! Form::label('distance', 'Distance') !!}
+	{!! Form::text('distance', null, ['id' => 'distance', 'class' => 'form-control']) !!}
 </div>
 
 <div class="form-group dropdown">
@@ -13,17 +13,17 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('Last Visited') !!}
-    {!! Form::text('visited_at', ($location->getVisitedAtAttribute())? $location->getVisitedAtAttribute() : 'yyyy-mm-dd', ['class' => 'form-control']) !!}
+    {!! Form::label('visited_at', 'Last Visited') !!}
+    {!! Form::text('visited_at', (isset($location) && $location->getVisitedAtAttribute())? $location->getVisitedAtAttribute() : 'yyyy-mm-dd', ['id' => 'visited_at','class' => 'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('tag_list', 'Tags:') !!}
 	{!! Form::select('tag_list[]', $tags, null, ['id' => 'tag-list', 'class' => 'form-control',  'multiple']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('active') !!}
+	{!! Form::label('active', 'Active') !!}
     {!! Form::hidden('active',  0) !!}
-	{!! Form::checkbox('active',  1, null, ['class' => 'form-control']) !!}
+	{!! Form::checkbox('active',  1, null, ['id' => 'active', 'class' => 'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::submit($submit, ['class' => 'btn btn-success']) !!}
