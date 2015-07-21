@@ -2,11 +2,23 @@
 	{!! Form::label('name') !!}
 	{!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
-{{-- {{dd($location->tag_list)}} --}}
+<div class="form-group">
+	{!! Form::label('distance') !!}
+	{!! Form::text('distance', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group dropdown">
+    {!! Form::label('stars', 'Star Rating') !!}
+    {!! Form::select('stars', [0, 1, 2, 3, 4, 5], null, ['id' => 'star_rating', 'class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
+    {!! Form::label('Last Visited') !!}
+    {!! Form::text('visited_at', ($location->getVisitedAtAttribute())? $location->getVisitedAtAttribute() : 'yyyy-mm-dd', ['class' => 'form-control']) !!}
+</div>
 <div class="form-group">
 	{!! Form::label('tag_list', 'Tags:') !!}
 	{!! Form::select('tag_list[]', $tags, null, ['id' => 'tag-list', 'class' => 'form-control',  'multiple']) !!}
-	{{-- name , list, --}}
 </div>
 <div class="form-group">
 	{!! Form::label('active') !!}

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Location extends Model
 {
@@ -13,9 +14,24 @@ class Location extends Model
      * @var array
      */
 	protected $fillable = [
-        'name',
         'active',
+        'distance',
+        'name',
+		'stars',
+        'visited_at'
     ];
+
+    protected $dates = ['visited_at'];
+
+//    public function setVisitedAtAttribute($date)
+//    {
+//        $this->attributes['visited_at'] = Carbon::Parse('Y-m-d', $date);
+//    }
+
+    public function getVisitedAtAttribute()
+    {
+        return $this->attributes['visited_at'];
+    }
 
 	/**
 	 * Get the tags associated with the given location
