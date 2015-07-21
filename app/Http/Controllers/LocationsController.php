@@ -32,6 +32,25 @@ class LocationsController extends Controller
         return view('locations.index', compact('locations'));
     }
 
+
+    /**
+     * Search for food
+     *
+     * @return Response
+     */
+    public function home()
+    {
+        // Get an array of Location IDs
+        $listLocations = Location::lists('id')->toArray();
+        // Picks a random entry out of an array
+        $randArrayID = array_rand($listLocations);
+        // Get Location by ID
+        $location = Location::find($listLocations[$randArrayID]);
+
+        return view('locations.home', compact('location'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +66,7 @@ class LocationsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  LocationRequest  $request
      * @return Response
      */
     public function store(LocationRequest $request)
@@ -60,7 +79,7 @@ class LocationsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function show(Location $location)
@@ -71,7 +90,7 @@ class LocationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function edit(Location $location)
@@ -84,14 +103,13 @@ class LocationsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param  Location $location
+     * @param  LocationRequest  $request
      * @return Response
      */
     public function update(Location $location, LocationRequest $request)
     {
         $location->update($request->all());
-        
         $this->syncTags($location, (array) $request->input('tag_list'));
         
         return redirect()->action('LocationsController@index');
@@ -100,14 +118,12 @@ class LocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Location $location
      * @return Response
      */
     public function destroy(Location $location)
     {
-        
         $location->delete();
-        
         return redirect()->action('LocationsController@index');
     }
 

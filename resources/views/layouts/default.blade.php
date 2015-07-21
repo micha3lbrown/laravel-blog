@@ -12,7 +12,7 @@
   <body>
   		@include('elements.header')
 		
-		<div class="container" style="padding-top:50px;">
+		<div class="container" style="padding: 50px 15px 50px 15px;">
 			@yield('content')
 		</div>
 
