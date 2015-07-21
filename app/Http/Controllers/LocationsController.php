@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use Auth;
-use App\Http\Controllers\Controller;
 use App\Location;
+use App\Tag;
+use App\Http\Requests;
 use App\Http\Requests\LocationRequest;
+use App\Http\Controllers\Controller;
 
 class LocationsController extends Controller
 {
     
     public function __construct()
     {
-        $this->middleware('owner', ['only' => [ 'edit', 'update']]);
+        // $this->middleware('owner', ['only' => [ 'edit', 'update']]);
+        $this->middleware('auth', ['except' => ['index', 'view']]);
     }
     
     /**
@@ -26,6 +28,7 @@ class LocationsController extends Controller
     public function index()
     {
         $locations = Location::all();
+
         return view('locations.index', compact('locations'));
     }
 
@@ -36,7 +39,8 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        $tags = \App\Tag::lists('name', 'id');
+        $tags = Tag::lists('name', 'id');
+
         return view('locations.create', compact('tags'));
     }
 
@@ -48,11 +52,7 @@ class LocationsController extends Controller
      */
     public function store(LocationRequest $request)
     {
-        $location = new Location($request->all());
-        
-        Auth::user()->locations()->save($location);
-        
-        $location->tags()->attach($request->input('tag_list'));
+        $this->createLocation($request);
         
         return redirect()->action('LocationsController@index');
     }
@@ -76,7 +76,8 @@ class LocationsController extends Controller
      */
     public function edit(Location $location)
     {
-        $tags = \App\Tag::lists('name', 'id');
+        $tags = Tag::lists('name', 'id');
+        
         return view('locations.edit', compact('location', 'tags'));
     }
 
@@ -90,7 +91,9 @@ class LocationsController extends Controller
     public function update(Location $location, LocationRequest $request)
     {
         $location->update($request->all());
+        
         $this->syncTags($location, (array) $request->input('tag_list'));
+        
         return redirect()->action('LocationsController@index');
     }
 
@@ -104,6 +107,7 @@ class LocationsController extends Controller
     {
         
         $location->delete();
+        
         return redirect()->action('LocationsController@index');
     }
 
@@ -126,8 +130,10 @@ class LocationsController extends Controller
      */
     private function createLocation(LocationRequest $request)
     {
-        $location = Location::create($request->all());
+        $location = Auth::user()->locations()->create($request->all());
+
         $this->syncTags($location, $request->input('tag_list'));
+        
         return $location;
     }
 }
