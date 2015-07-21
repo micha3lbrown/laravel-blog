@@ -16,7 +16,7 @@
 // });
 
 Route::resource('locations', 'LocationsController');
-Route::get('home', 'LocationsController@home');
+Route::any('home', 'LocationsController@home');
 
 Route::resource('tags', 'TagsController');
 

@@ -9,7 +9,7 @@ use App\Location;
 use App\Tag;
 use App\Http\Requests;
 use App\Http\Requests\LocationRequest;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller; //@todo commented out to test if this is being used
 
 class LocationsController extends Controller
 {
@@ -40,12 +40,17 @@ class LocationsController extends Controller
      */
     public function home()
     {
-        // Get an array of Location IDs
-        $listLocations = Location::lists('id')->toArray();
-        // Picks a random entry out of an array
-        $randArrayID = array_rand($listLocations);
-        // Get Location by ID
-        $location = Location::find($listLocations[$randArrayID]);
+        var_dump($_POST);
+//        if (!$request) {
+
+            // Get an array of Location IDs
+            $listLocations = Location::lists('id')->toArray();
+            // Picks a random entry out of an array
+            $randArrayID = array_rand($listLocations);
+            // Get Location by ID
+            $location = Location::find($listLocations[$randArrayID]);
+//        }
+//        $location = array();
 
         return view('locations.home', compact('location'));
     }
@@ -147,7 +152,6 @@ class LocationsController extends Controller
     private function createLocation(LocationRequest $request)
     {
         $location = Auth::user()->locations()->create($request->all());
-
         $this->syncTags($location, $request->input('tag_list'));
         
         return $location;

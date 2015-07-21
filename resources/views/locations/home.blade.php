@@ -5,8 +5,15 @@
 
 
     <div class="row">
-        <div class="col-sm-12">
-            <h1>Location</h1>
+        <div class="col-sm-12 text-center">
+            <h1>Fine Me Food</h1>
+            <form method="POST" action="./home" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="random_location" value="1">
+                <div class="form-group" style="padding-top: 50px; padding-bottom: 10px">
+                    <button class="btn btn-success" type="submit">Now!</button>
+                </div>
+            </form>
             <hr>
             @include('errors.form-errors')
         </div>
@@ -14,7 +21,7 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <h2>{{$location->name}}</h2>
+            <h3>{{$location->name}}</h3>
         </div>
     </div>
 
