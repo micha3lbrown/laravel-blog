@@ -16,10 +16,10 @@
 // });
 
 Route::resource('locations', 'LocationsController');
-Route::get('home', 'PagesController@home');
-Route::post('home', 'PagesController@filter');
-
+Route::get('/', 'PagesController@home');
 Route::resource('tags', 'TagsController');
 
 Route::controller('auth', 'Auth\AuthController');
 Route::controller('password', 'Auth\PasswordController');
+
+//Route::get('filter', 'PagesController@filter');

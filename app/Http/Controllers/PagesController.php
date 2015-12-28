@@ -21,6 +21,11 @@ class PagesController extends Controller
         return view('locations.home', compact('locations', 'tags', 'randomLocation'));
     }
 
+    public function food()
+    {
+
+    }
+
     public function filter(Request $request)
     {
     	dd($request);
